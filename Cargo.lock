@@ -48,15 +48,19 @@ name = "error-code"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "darling",
- "proc-macro2",
- "quote",
- "syn",
+ "error-code-derive",
 ]
 
 [[package]]
 name = "error-code-derive"
 version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "darling",
+ "proc-macro2",
+ "quote",
+ "syn",
+]
 
 [[package]]
 name = "fnv"
