@@ -57,6 +57,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "darling",
+ "error-code",
  "proc-macro2",
  "quote",
  "syn",
