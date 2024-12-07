@@ -6,7 +6,7 @@ use error_info::process_error_info;
 
 #[derive(Debug, FromDeriveInput)]
 #[darling(attributes(error_info))]
-struct EnumFromDarling {
+struct ErrorData {
   ident: syn::Ident,
   generics: syn::Generics,
   data: Data<EnumVariants, ()>,
@@ -45,11 +45,31 @@ pub fn derive_to_error_info(input: TokenStream) -> TokenStream {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use anyhow::Result;
 
     #[test]
     fn test_daling_data_struct() -> Result<()> {
-        
-        
-        Ok(())
+      let input = r#"
+      #[derive(thiserror::Error, ToErrorInfo)]
+      #[error_info(app_type="http::StatusCode", prefix="01")]
+      pub enum MyError {
+      #[error("Invalid command: {0}")]
+      #[error_info(code="IC", app_code="400")]
+      InvalidCommand(String),
+
+      #[error("Invalid argument: {0}")]
+      #[error_info(code="IA", app_code="400", client_msg="friendly msg")]
+      InvalidArgument(String),
+
+      #[error("{0}")]
+      #[error_info(code="RE", app_code="500")]
+      RespError(#[from] RespError),
+      }
+      "#;
+
+      let parsed = syn::parse_str(input).unwrap();
+      let info = ErrorData::from_derive_input(&parsed).unwrap();
+      println!("{:?}", info);
+      Ok(())
     }
-}
+} 

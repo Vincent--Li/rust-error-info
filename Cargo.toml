@@ -8,3 +8,4 @@ resolver = "2"
 error-code = { path = "./error-code" }
 error-code-derive = { path = "./error-code-derive" }
 anyhow = "1"
+thiserror = "1"

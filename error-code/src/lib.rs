@@ -1,3 +1,5 @@
+
+#[derive(Debug)]
 pub struct ErrorInfo<T> {
   pub app_code: T,
   pub code: String,
